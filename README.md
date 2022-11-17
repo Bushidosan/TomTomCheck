@@ -10,6 +10,6 @@ go run .\main.go <API Key>
 ## Remidation
 The remidation is pretty simple, TomTom has a nice setting called "Domain Whitelisting". When enabled before making the API call TomTom will first verify if the source making the API call is an allowed source and will return a 403 forbidden if this is not the case.
 
-**Key take away?** : Make sure domain whitelisting is enabled otherwise bad people can waste your money.
+**Key take away** : Make sure domain whitelisting is enabled otherwise bad people can waste your money.
 
 https://developer.tomtom.com/blog/decoded/how-protect-your-api-key-using-domain-whitelisting
