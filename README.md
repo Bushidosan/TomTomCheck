@@ -5,7 +5,6 @@ The TomTom API is another version of the clasic Google Maps API, it can be used 
 ```
 go run .\main.go <API Key>
 ```
-
 ## Remidation
 The remidation is pretty simple, TomTom has a nice setting called "Domain Whitelisting". When enabled before making the API call TomTom will first verify if the source making the API call is an allowed source and will return a 403 forbidden if this is not the case.
 
