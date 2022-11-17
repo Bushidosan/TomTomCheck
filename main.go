@@ -11,7 +11,15 @@ import (
 )
 
 func main() {
+	figure.NewFigure("TomTom Check", "", true).Print()
+
+	if len(os.Args) != 2 {
+		fmt.Println("APIKey is required: TomTomCheck <API Key>")
+		os.Exit(0)
+	}
+
 	APIKey := os.Args[1]
+	color.Yellow("\n\nAPI Key used is: %s \n\n", APIKey)
 
 	APICalls := map[string]string{
 		"Map Display API":                       "https://a.api.tomtom.com/map/1/tile/basic/main/1/0/0.png?key=" + APIKey,
@@ -26,18 +34,10 @@ func main() {
 		"Geofencing API":                        "https://api.tomtom.com/geofencing/1/projects/44de824d-c368-46cf-a234-a6792682dfd6/fences?key=" + APIKey,
 	}
 
-	figure.NewFigure("TomTom Check", "", true).Print()
-
-	if len(os.Args) != 2 {
-		fmt.Println("APIKey is required: TomTomCheck <API Key>")
-		os.Exit(0)
-	}
-	color.Yellow("\n\nAPI Key used is: %s \n\n", APIKey)
-
 	// Domain Whitelisting check, if enabled exit.
 	color.Blue("Testing for Domain Whitelisting\n\n")
 	resp, _ := http.Get("https://api.tomtom.com/map/1/copyrights/caption.json?key=" + APIKey)
-	if resp.StatusCode == 403 {
+	if resp.StatusCode == http.StatusForbidden {
 		color.Green("[-] API Key not vulnerable, Domain Whitelisting is enabled")
 		os.Exit(1)
 	} else {
@@ -48,7 +48,7 @@ func main() {
 	for name, request := range APICalls {
 		fmt.Printf("\n\n[-] Testing: %s\n", name)
 		resp, _ := http.Get(request)
-		if resp.StatusCode == 403 {
+		if resp.StatusCode == http.StatusForbidden {
 			color.Green("\n[-] API Key is not vulnerable for: " + name)
 		} else {
 			color.Red("\n[!] API Key is vulnerable for: " + name)
